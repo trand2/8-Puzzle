@@ -109,11 +109,8 @@ class UninformedSearch {
             counter++;
         }
 
-        for(int i=0; i<pathToSolution.size()/2; i++) {
-            String temp = pathToSolution.get(i);
-            pathToSolution.set(i, pathToSolution.get(pathToSolution.size() - i - 1));
-            pathToSolution.set(pathToSolution.size() - i - 1, temp);
-        }
+        // Reverse list to print in correct order
+        Collections.reverse(pathToSolution);
 
         counter = 0;
 
