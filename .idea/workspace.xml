@@ -2,25 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19993990-ecad-4282-8352-11f6487b00bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/BiDirectional.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/DepthFirst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/DepthLimited.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/IterativeDeepening.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Moves.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/UninformedSearch.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/UninformedSearch.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/puzzle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/puzzle.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BiDirectional.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DepthFirst.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DepthLimited.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IterativeDeepening.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Moves.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Node.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UninformedSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UninformedSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/puzzle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/puzzle.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,18 +93,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/UninformedSearch.java</url>
-          <line>97</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/UninformedSearch.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="16" />
+          <line>119</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

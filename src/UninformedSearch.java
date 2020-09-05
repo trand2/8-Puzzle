@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 class UninformedSearch {
 
@@ -14,6 +11,7 @@ class UninformedSearch {
     private static boolean solutionFound = false;
     private static int numSolutionPath = 0;
     private static String solvedPuzzle;
+    private static List<String> pathToSolution = new ArrayList<>();
 
     static void breadthFirstSearch(){
 
@@ -103,20 +101,35 @@ class UninformedSearch {
 
     static void printHistory() {
         int col = 3;
+        int counter = 0;
 
         while (traceState != null) {
+            pathToSolution.add(traceState);
+            traceState = stateHistory.get(traceState);
+            counter++;
+        }
+
+        for(int i=0; i<pathToSolution.size()/2; i++) {
+            String temp = pathToSolution.get(i);
+            pathToSolution.set(i, pathToSolution.get(pathToSolution.size() - i - 1));
+            pathToSolution.set(pathToSolution.size() - i - 1, temp);
+        }
+
+        counter = 0;
+
+        while (counter != pathToSolution.size()) {
             int index = 0;
 
             for (int i = 0; i < col; i++) {
                 for (int j = 0; j < col; j++) {
-                    System.out.print(traceState.charAt(index) + " ");
+                    System.out.print(pathToSolution.get(counter).charAt(index) + " ");
                     index++;
                 }
                 System.out.println();
             }
             System.out.println();
             numSolutionPath++;
-            traceState = stateHistory.get(traceState);
+            counter++;
         }
     }
 
