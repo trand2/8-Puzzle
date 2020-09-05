@@ -1,7 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,20 +10,20 @@ public class Main {
 
     // Driver
     public static void main(String[] args) throws FileNotFoundException {
-        String text = "";
+        String board = "";
 
         if (args.length < 2) {
             System.out.println("Please enter the name of the file with the puzzle config.");
         } else {
             Scanner scanner = new Scanner(new FileReader(args[1]));
             while (scanner.hasNext()) {
-                text += scanner.next();
+                board += scanner.next();
             }
         }
 
         // Make sure board has valid numbers
-        if (validBoard(text)) {
-            initializeBoard(text.split(""));
+        if (validBoard(board)) {
+            initializeBoard(board.split(""));
             printInitConfig();
         } else {
             System.out.println("The file doesn't contain a correct puzzle state");
@@ -38,10 +37,13 @@ public class Main {
         }
 
         Node root = new Node(initialBoard);
-        UninformedSearch ui = new UninformedSearch();
+//        UninformedSearch ui = new UninformedSearch();
 
         long startTime = System.currentTimeMillis();
-        List<Node> solution = ui.BreadthFirstSearch(root);
+        UninformedSearch e = new UninformedSearch();              // New Instance of the UninformedSearch
+        e.add(board, null);
+        e.breadthFirstSearch();
+//        List<Node> solution = ui.BreadthFirstSearch(root);
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
 
@@ -49,24 +51,19 @@ public class Main {
         System.out.println(separator);
         System.out.println("Time to find a solution: "+ elapsedTime + " ms");
         System.out.println(separator);
-        System.out.println("Number of nodes created: " + UninformedSearch.getNumNodesCreated());
+        System.out.println("Number of nodes created: " + e.getNumNodesCreated());
         System.out.println(separator);
-        System.out.println("Number of nodes expanded: " + Node.getNumNodesExpanded());
+        System.out.println("Number of nodes expanded: " + e.getNumNodesExpanded());
         System.out.println(separator);
         System.out.println("Solution Path:  ");
 
-        Collections.reverse(solution);
-        if (solution.size() > 0) {
-            for (int i = 0; i < solution.size(); i++) {
-                solution.get(i).printPuzzle();
-            }
-        }
+        e.printHistory();
 
         System.out.println(separator);
-        System.out.println("Number of moved along the solutions path: " + solution.size());
+        System.out.println("Number of moved along the solutions path: " + e.getNumSolutionPath());
         System.out.println(separator);
         System.out.println("Solved Puzzle: ");
-        solution.get(solution.size() - 1).printPuzzle();
+        e.printSolvedPuzzle();
 
     }
 
