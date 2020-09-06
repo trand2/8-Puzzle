@@ -328,7 +328,13 @@ class UninformedSearch {
 
         // Reverse list to print in correct order
         Collections.reverse(pathToSolution);
-        counter = 0;
+        numSolutionPath = pathToSolution.size();
+        if (pathToSolution.size() > 20) {
+            counter = pathToSolution.size() - 20;
+        } else {
+            counter = 0;
+        }
+
         while (counter != pathToSolution.size()) {
             int index = 0;
             for (int i = 0; i < col; i++) {
@@ -339,7 +345,6 @@ class UninformedSearch {
                 System.out.println();
             }
             System.out.println();
-            numSolutionPath++;
             counter++;
         }
     }
