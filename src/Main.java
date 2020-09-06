@@ -14,10 +14,17 @@ public class Main {
 
         if (args.length < 2) {
             System.out.println("Please enter the name of the file with the puzzle config.");
+            
         } else {
             Scanner scanner = new Scanner(new FileReader(args[1]));
             while (scanner.hasNext()) {
                 board += scanner.next();
+            }
+            if (board.contains("_")) {
+                int underscorePosition = board.indexOf('_');
+                char[] boardChars = board.toCharArray();
+                boardChars[underscorePosition] = '0';
+                board = String.valueOf(boardChars);
             }
         }
 
@@ -40,9 +47,9 @@ public class Main {
 //        UninformedSearch ui = new UninformedSearch();
 
         long startTime = System.currentTimeMillis();
-        UninformedSearch e = new UninformedSearch();              // New Instance of the UninformedSearch
-        e.add(board, null);
-        e.breadthFirstSearch();
+        UninformedSearch uninformedSearch = new UninformedSearch();              // New Instance of the UninformedSearch
+        uninformedSearch.add(board, null, SearchType.BD);
+        uninformedSearch.biDirectional();
 //        List<Node> solution = ui.BreadthFirstSearch(root);
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
@@ -51,19 +58,19 @@ public class Main {
         System.out.println(separator);
         System.out.println("Time to find a solution: "+ elapsedTime + " ms");
         System.out.println(separator);
-        System.out.println("Number of nodes created: " + e.getNumNodesCreated());
+        System.out.println("Number of nodes created: " + uninformedSearch.getNumNodesCreated());
         System.out.println(separator);
-        System.out.println("Number of nodes expanded: " + e.getNumNodesExpanded());
+        System.out.println("Number of nodes expanded: " + uninformedSearch.getNumNodesExpanded());
         System.out.println(separator);
         System.out.println("Solution Path:  ");
 
-        e.printHistory();
+        uninformedSearch.printHistory();
 
         System.out.println(separator);
-        System.out.println("Number of moved along the solutions path: " + e.getNumSolutionPath());
+        System.out.println("Number of moved along the solutions path: " + uninformedSearch.getNumSolutionPath());
         System.out.println(separator);
         System.out.println("Solved Puzzle: ");
-        e.printSolvedPuzzle();
+        uninformedSearch.printSolvedPuzzle();
 
     }
 

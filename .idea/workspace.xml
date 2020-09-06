@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19993990-ecad-4282-8352-11f6487b00bc" name="Default Changelist" comment="" />
+    <list default="true" id="19993990-ecad-4282-8352-11f6487b00bc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/SearchType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/UninformedSearch.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/UninformedSearch.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/puzzle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/puzzle.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UninformedSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UninformedSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/puzzle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/puzzle.txt" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,9 +20,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -78,7 +87,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -89,13 +100,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/UninformedSearch.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="20" />
+          <line>303</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/UninformedSearch.java</url>
-          <line>111</line>
-          <option name="timeStamp" value="22" />
+          <line>340</line>
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

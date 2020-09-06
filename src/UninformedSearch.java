@@ -2,9 +2,12 @@ import java.util.*;
 
 class UninformedSearch {
 
-    private static Queue<String> agenda = new LinkedList<>();    // Use of Queue Implemented using LinkedList for Storing All the Nodes in BFS.
+    private static LinkedList<String> agenda = new LinkedList<>();   // Use of Queue Implemented using LinkedList for Storing All the Nodes in BFS.
     private static Map<String,Integer> stateDepth = new HashMap<>(); // HashMap is used to ignore repeated nodes
     private static Map<String,String> stateHistory = new HashMap<>(); // relates each position to its predecessor
+    private static Map<String,String> stateHistoryReverse = new HashMap<>();
+    private static LinkedList<String> agendaReverse = new LinkedList<>();
+    private static Map<String,Integer> stateDepthReverse = new HashMap<>();
     private static String traceState;
     private static int numNodesExpanded = 0;
     private static int numNodesCreated = 0;
@@ -12,31 +15,33 @@ class UninformedSearch {
     private static int numSolutionPath = 0;
     private static String solvedPuzzle;
     private static List<String> pathToSolution = new ArrayList<>();
+    private static SearchType searchType;
+    private static String direction = "front";
+    private static String searchStart;
+    private static String goalState = "123456780";
 
     static void breadthFirstSearch(){
+
+        searchType = SearchType.BFS;
 
         while(!agenda.isEmpty() && !solutionFound){
             String currentState = agenda.remove();
             checkCompletion(null, currentState);
-
             if (!solutionFound) {
                 up(currentState); // Move the blank space up and add new state to queue
                 numNodesExpanded++;
             } else
                 break;
-
             if (!solutionFound) {
                 down(currentState); // Move the blank space down
                 numNodesExpanded++;
             } else
                 break;
-
             if (!solutionFound) {
                 left(currentState); // Move left
                 numNodesExpanded++;
             } else
                 break;
-
             if (!solutionFound) {
                 right(currentState); // Move right and remove the current node from Queue
                 numNodesExpanded++;
@@ -45,15 +50,193 @@ class UninformedSearch {
         }
     }
 
+    static void depthFirstSearch(){
+
+        searchType = SearchType.DFS;
+
+        while(!agenda.isEmpty() && !solutionFound){
+            String currentState = agenda.remove();
+            checkCompletion(null, currentState);
+            if (!solutionFound) {
+                up(currentState); // Move the blank space up and add new state to queue
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                down(currentState); // Move the blank space down
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                left(currentState); // Move left
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                right(currentState); // Move right and remove the current node from Queue
+                numNodesExpanded++;
+            } else
+                break;
+        }
+    }
+
+    static void depthLimitedSearch(){
+
+        int depth = 0;
+        int limit = 5;
+        searchType = SearchType.DLS;
+
+        while(!agenda.isEmpty() && !solutionFound){
+            if (depth <= limit) {
+                String currentState = agenda.remove();
+                checkCompletion(null, currentState);
+                if (!solutionFound) {
+                    up(currentState); // Move the blank space up and add new state to queue
+                    numNodesExpanded++;
+                } else
+                    break;
+                if (!solutionFound) {
+                    down(currentState); // Move the blank space down
+                    numNodesExpanded++;
+                } else
+                    break;
+                if (!solutionFound) {
+                    left(currentState); // Move left
+                    numNodesExpanded++;
+                } else
+                    break;
+                if (!solutionFound) {
+                    right(currentState); // Move right and remove the current node from Queue
+                    numNodesExpanded++;
+                } else
+                    break;
+            }
+            else {
+                System.out.println("\nGoal not found within depth limit");
+                System.exit(0);
+            }
+            depth++;
+        }
+    }
+
+    static void iterativeDeepening(int depth){
+        int limit = 5;
+        searchType = SearchType.ID;
+
+        while(!agenda.isEmpty() && !solutionFound){
+            if (depth <= limit) {
+                String currentState = agenda.remove();
+                checkCompletion(null, currentState);
+                if (!solutionFound) {
+                    up(currentState); // Move the blank space up and add new state to queue
+                    numNodesExpanded++;
+                } else
+                    break;
+                if (!solutionFound) {
+                    down(currentState); // Move the blank space down
+                    numNodesExpanded++;
+                } else
+                    break;
+                if (!solutionFound) {
+                    left(currentState); // Move left
+                    numNodesExpanded++;
+                } else
+                    break;
+                if (!solutionFound) {
+                    right(currentState); // Move right and remove the current node from Queue
+                    numNodesExpanded++;
+                } else
+                    break;
+            }
+            else {
+                depth++;
+                iterativeDeepening(depth);
+            }
+        }
+    }
+
+    static void biDirectional(){
+
+        searchType = SearchType.BD;
+        direction = "back";
+        String goal = "123456780";
+        add(goal, null, searchType);
+        direction = "front";
+
+
+        while(!agenda.isEmpty() && !solutionFound){
+            String currentState = agenda.remove();
+            String currentStateReverse = agendaReverse.remove();
+            checkCompletion(null, currentState);
+            if (!solutionFound) {
+                up(currentState); // Move the blank space up and add new state to queue
+                numNodesExpanded++;
+                direction = "back";
+                up(currentStateReverse); // Move the blank space up and add new state to queue
+                numNodesExpanded++;
+                direction = "front";
+            } else
+                break;
+            if (!solutionFound) {
+                down(currentState); // Move the blank space down
+                numNodesExpanded++;
+                direction = "back";
+                down(currentStateReverse); // Move the blank space down
+                numNodesExpanded++;
+                direction = "front";
+            } else
+                break;
+            if (!solutionFound) {
+                left(currentState); // Move left
+                numNodesExpanded++;
+                direction = "back";
+                left(currentStateReverse); // Move left
+                numNodesExpanded++;
+                direction = "front";
+            } else
+                break;
+            if (!solutionFound) {
+                right(currentState); // Move right and remove the current node from Queue
+                numNodesExpanded++;
+                direction = "back";
+                right(currentStateReverse); // Move right and remove the current node from Queue
+                numNodesExpanded++;
+                direction = "front";
+            } else
+                break;
+        }
+    }
+
+
     //Add method to add the new string to the Map and Queue
-    static void add(String newState, String oldState){
-        if(!stateDepth.containsKey(newState)){
+    static void add(String newState, String oldState, SearchType searchType){
+        if (searchType.equals(SearchType.BD) && direction.equals("front") && (!stateDepth.containsKey(newState))) {
             int newValue = oldState == null ? 0 : stateDepth.get(oldState) + 1;
             stateDepth.put(newState, newValue);
             agenda.add(newState);
             stateHistory.put(newState, oldState);
+            numNodesCreated++;
+        } else if (searchType.equals(SearchType.BD) && direction.equals("back") && !stateDepthReverse.containsKey(newState)) {
+            int newValue = oldState == null ? 0 : stateDepthReverse.get(oldState) + 1;
+            stateDepthReverse.put(newState, newValue);
+            agendaReverse.add(newState);
+            stateHistoryReverse.put(newState, oldState);
+            numNodesCreated++;
+        } else if (searchType.equals(SearchType.BFS) && (!stateDepth.containsKey(newState))) {
+            int newValue = oldState == null ? 0 : stateDepth.get(oldState) + 1;
+            stateDepth.put(newState, newValue);
+            agenda.add(newState);
+            stateHistory.put(newState, oldState);
+            numNodesCreated++;
+        } else if ((searchType.equals(SearchType.DFS) || searchType.equals(SearchType.DLS) || searchType.equals(SearchType.ID))
+                && (!stateDepth.containsKey(newState))) {
+            int newValue = oldState == null ? 0 : stateDepth.get(oldState) + 1;
+            stateDepth.put(newState, newValue);
+            agenda.addFirst(newState);
+            stateHistory.put(newState, oldState);
+            numNodesCreated++;
         }
-        numNodesCreated++;
+
     }
 
     /* Each of the Methods below Takes the Current State of Board as String. Then the operation to move the blank space is done if possible.
@@ -91,11 +274,26 @@ class UninformedSearch {
 
     private static void checkCompletion(String oldState, String newState) {
         if (oldState != null)
-            add(newState, oldState);
-        if(newState.equals("123456780")) {
-            traceState = newState;
-            solvedPuzzle = traceState;
-            solutionFound = true;
+            add(newState, oldState, searchType);
+
+        if (searchType.equals(SearchType.BD)) {
+            if (direction.equals("front")) {
+                if (stateHistoryReverse.containsKey(newState)) {
+                    traceState = newState;
+                    solutionFound = true;
+                }
+            } else if (direction.equals("back")) {
+                if (stateHistory.containsKey(newState)) {
+                    traceState = newState;
+                    solutionFound = true;
+                }
+            }
+        } else {
+            if (newState.equals("123456780")) {
+                traceState = newState;
+                solvedPuzzle = traceState;
+                solutionFound = true;
+            }
         }
     }
 
@@ -103,20 +301,36 @@ class UninformedSearch {
         int col = 3;
         int counter = 0;
 
-        while (traceState != null) {
-            pathToSolution.add(traceState);
-            traceState = stateHistory.get(traceState);
-            counter++;
+        if (searchType.equals(SearchType.BD)) {
+            searchStart = traceState;
+            while (traceState != null) {
+                pathToSolution.add(traceState);
+                traceState = stateHistoryReverse.get(traceState);
+                counter++;
+            }
+            counter = 0;
+
+            Collections.reverse(pathToSolution);
+
+            traceState = stateHistory.get(searchStart);
+            while (traceState != null) {
+                pathToSolution.add(traceState);
+                traceState = stateHistory.get(traceState);
+                counter++;
+            }
+        } else {
+            while (traceState != null) {
+                pathToSolution.add(traceState);
+                traceState = stateHistory.get(traceState);
+                counter++;
+            }
         }
 
         // Reverse list to print in correct order
         Collections.reverse(pathToSolution);
-
         counter = 0;
-
         while (counter != pathToSolution.size()) {
             int index = 0;
-
             for (int i = 0; i < col; i++) {
                 for (int j = 0; j < col; j++) {
                     System.out.print(pathToSolution.get(counter).charAt(index) + " ");
@@ -131,12 +345,13 @@ class UninformedSearch {
     }
 
     static void printSolvedPuzzle() {
+
         int index = 0;
         int col = 3;
 
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < col; j++) {
-                System.out.print(solvedPuzzle.charAt(index) + " ");
+                System.out.print(goalState.charAt(index) + " ");
                 index++;
             }
             System.out.println();
