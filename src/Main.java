@@ -11,21 +11,38 @@ public class Main {
     // Driver
     public static void main(String[] args) throws FileNotFoundException {
         String board = "";
+        Scanner input = new Scanner(System.in);
+        int searchToRun;
+        String fileName;
+        int depth = 0;
 
-        if (args.length < 2) {
-            System.out.println("Please enter the name of the file with the puzzle config.");
-            
-        } else {
-            Scanner scanner = new Scanner(new FileReader(args[1]));
-            while (scanner.hasNext()) {
-                board += scanner.next();
-            }
-            if (board.contains("_")) {
-                int underscorePosition = board.indexOf('_');
-                char[] boardChars = board.toCharArray();
-                boardChars[underscorePosition] = '0';
-                board = String.valueOf(boardChars);
-            }
+        System.out.println("Welcome to 8-Puzzle!!!\n");
+        System.out.println("1 - Breadth First Search");
+        System.out.println("2 - Depth First Search");
+        System.out.println("3 - Depth Limited Search");
+        System.out.println("4 - Iterative Deepening");
+        System.out.println("5 - Bi-Directional");
+        System.out.print("\nEnter the number for the search you would like to run to solve the puzzle: ");
+        searchToRun = input.nextInt();
+
+        if (searchToRun == 3) {
+            System.out.println("\nYou have selected \"Depth First Search\".");
+            System.out.print("Enter a depth-limit: ");
+            depth = input.nextInt();
+        }
+
+        System.out.print("Now enter the file name with the starting puzzle configuration: ");
+        fileName = input.next();
+
+        Scanner scanner = new Scanner(new FileReader(fileName));
+        while (scanner.hasNext()) {
+            board += scanner.next();
+        }
+        if (board.contains("_")) {
+            int underscorePosition = board.indexOf('_');
+            char[] boardChars = board.toCharArray();
+            boardChars[underscorePosition] = '0';
+            board = String.valueOf(boardChars);
         }
 
         // Make sure board has valid numbers
@@ -47,10 +64,27 @@ public class Main {
 //        UninformedSearch ui = new UninformedSearch();
 
         long startTime = System.currentTimeMillis();
-        UninformedSearch uninformedSearch = new UninformedSearch();              // New Instance of the UninformedSearch
-        uninformedSearch.add(board, null, SearchType.BD);
-        uninformedSearch.biDirectional();
-//        List<Node> solution = ui.BreadthFirstSearch(root);
+
+        UninformedSearch uninformedSearch = new UninformedSearch(); // New Instance of the UninformedSearch
+
+        switch (searchToRun) {
+            case 1:
+                uninformedSearch.add(board, null, SearchType.BFS);
+                uninformedSearch.breadthFirstSearch();
+            case 2:
+                uninformedSearch.add(board, null, SearchType.DFS);
+                uninformedSearch.depthFirstSearch();
+            case 3:
+                uninformedSearch.add(board, null, SearchType.DLS);
+                uninformedSearch.depthLimitedSearch(depth);
+            case 4:
+                uninformedSearch.add(board, null, SearchType.ID);
+                uninformedSearch.iterativeDeepening(0);
+            case 5:
+                uninformedSearch.add(board, null, SearchType.BD);
+                uninformedSearch.biDirectional();
+        }
+
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
 

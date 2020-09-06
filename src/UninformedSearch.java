@@ -80,9 +80,9 @@ class UninformedSearch {
         }
     }
 
-    static void depthLimitedSearch(){
+    static void depthLimitedSearch(int d){
 
-        int depth = 0;
+        int depth = d;
         int limit = 5;
         searchType = SearchType.DLS;
 
