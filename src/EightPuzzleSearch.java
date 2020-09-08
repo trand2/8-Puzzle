@@ -86,8 +86,8 @@ class EightPuzzleSearch {
 
     static void depthLimitedSearch(int d){
 
-        int depth = d;
-        int limit = 5;
+        int depth = 0;
+        int limit = d;
         searchType = SearchType.DLS;
 
         while(!agenda.isEmpty() && !solutionFound){
