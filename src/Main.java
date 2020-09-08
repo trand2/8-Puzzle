@@ -17,6 +17,7 @@ public class Main {
         int depth = 0;
         Heuristic heuristic = Heuristic.H_ONE;
         int heuristicToRun;
+        String test;
 
         System.out.println("Welcome to 8-Puzzle!!!\n");
         System.out.println("1 - Breadth First Search");

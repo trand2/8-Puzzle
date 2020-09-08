@@ -6,16 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19993990-ecad-4282-8352-11f6487b00bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Heuristic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Uninformed-8-Puzzle/UninformedSearch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UninformedSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EightPuzzleSearch.java" afterDir="false" />
-    </list>
+    <list default="true" id="19993990-ecad-4282-8352-11f6487b00bc" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
