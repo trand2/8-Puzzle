@@ -474,10 +474,12 @@ class EightPuzzleSearch {
         return difference;
     }
 
-    // This heuristic is almost similar to the manhattan distance heuristic except that it has higher value. When we estimate the cost
-    // by calculating the manhattan distance, we underestimate this cost because we do not count to the number moves the intermediate tiles should move
-    // in order to make space for the source tile to move. therefore, we think if the manhattan distance is, lets say, 4, it means
-    // there are 3 tiles in between that they should also move. so the estimate is (manhattan distance + manhattan distance - 1 = 2*manhattan distance-1)
+//    The heuristic I chose is almost similar to the manhattan distance heuristic. The main difference is that is has a
+//    higher value. For example, when we estimate the cost by calculating the manhattan distance, we underestimate this
+//    cost because we don’t count the number of movies the intermediate tiles should move in order to make space for the
+//    source tile to move. In this circumstance we think if the manhattan distance is, for example, 4, then it means
+//    there are 3 tiles in between that they should also move. So the estimate for my heuristic is:
+//    (manhattan distance + manhattan distance - 1 = 2 * manhattan distance - 1)
     private static int heuristicTwo(String currentState, String goalSate) {
         int difference = 0;
         int manhattanDistance = 0;

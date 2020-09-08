@@ -3,8 +3,6 @@ class Node {
     private int col = 3;
     private String stringPuzzle;
     private int totalCost;
-    Node child;
-    Node parent;
 
     Node(int[] p) {
         setPuzzle(p);
@@ -32,19 +30,8 @@ class Node {
         return totalCost;
     }
 
-    public void setTotalCost(int cost) {
-        totalCost = cost;
-    }
 
     void setTotalCost(int cost, int estimatedCost) {
         totalCost = cost + estimatedCost;
-    }
-
-    private void setParent(Node node) {
-        parent = node;
-    }
-
-    private void setChild(Node node) {
-        child = node;
     }
 }

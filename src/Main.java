@@ -17,7 +17,6 @@ public class Main {
         int depth = 0;
         Heuristic heuristic = Heuristic.H_ONE;
         int heuristicToRun;
-        String test;
 
         System.out.println("Welcome to 8-Puzzle!!!\n");
         System.out.println("1 - Breadth First Search");
@@ -82,7 +81,6 @@ public class Main {
 
         Node root = new Node(initialBoard);
         Node stringRoot = new Node(board, 0);
-//        EightPuzzleSearch ui = new EightPuzzleSearch();
 
         long startTime = System.currentTimeMillis();
 
