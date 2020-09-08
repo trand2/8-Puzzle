@@ -1,11 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class Node {
     int[] puzzle = new int[9];
     private int col = 3;
     private String stringPuzzle;
     private int totalCost;
+    Node child;
+    Node parent;
 
     Node(int[] p) {
         setPuzzle(p);
@@ -14,6 +13,10 @@ class Node {
     Node (String s, int cost) {
         stringPuzzle = s;
         totalCost = cost;
+    }
+
+    Node (String s) {
+        stringPuzzle = s;
     }
 
     private void setPuzzle(int[] p) {
@@ -35,5 +38,13 @@ class Node {
 
     void setTotalCost(int cost, int estimatedCost) {
         totalCost = cost + estimatedCost;
+    }
+
+    private void setParent(Node node) {
+        parent = node;
+    }
+
+    private void setChild(Node node) {
+        child = node;
     }
 }

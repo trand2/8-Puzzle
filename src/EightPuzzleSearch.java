@@ -1,6 +1,6 @@
 import java.util.*;
 
-class UninformedSearch {
+class EightPuzzleSearch {
 
     private static LinkedList<String> agenda = new LinkedList<>();   // Use of Queue Implemented using LinkedList for Storing All the Nodes in BFS.
     private static Map<String,Integer> stateDepth = new HashMap<>(); // HashMap is used to ignore repeated nodes
@@ -22,6 +22,7 @@ class UninformedSearch {
     private static String searchStart;
     private static String goalState = "123456780";
     private static Node node;
+    private static Heuristic heuristic;
 
     static void breadthFirstSearch(){
 
@@ -241,6 +242,38 @@ class UninformedSearch {
         }
     }
 
+    static void aStarSearch(Heuristic h){
+
+        searchType = SearchType.A_STAR;
+        heuristic = h;
+
+        while(!pq.isEmpty() && !solutionFound){
+            Node currentNode = pq.poll();
+            String currentState = currentNode.getStringPuzzle();
+            checkCompletion(null, currentState);
+            if (!solutionFound) {
+                up(currentState); // Move the blank space up and add new state to queue
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                down(currentState); // Move the blank space down
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                left(currentState); // Move left
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                right(currentState); // Move right and remove the current node from Queue
+                numNodesExpanded++;
+            } else
+                break;
+        }
+    }
+
 
     //Add method to add the new string to the Map and Queue
     static void add(String newState, String oldState, SearchType searchType){
@@ -273,8 +306,21 @@ class UninformedSearch {
             int newValue = oldState == null ? 0 : stateDepth.get(oldState) + 1;
             stateDepth.put(newState, newValue);
             node = new Node(newState, 0);
-//            agenda.add(newState);
             node.setTotalCost(0, heuristicOne(node.getStringPuzzle(), goalState));
+            pq.add(node);
+            stateHistory.put(newState, oldState);
+            numNodesCreated++;
+        } else if (searchType.equals(SearchType.A_STAR) && (!stateDepth.containsKey(newState))) {
+            int newValue = oldState == null ? 0 : stateDepth.get(oldState) + 1;
+            stateDepth.put(newState, newValue);
+            node = new Node(newState, 0);
+            Node currentNode = new Node(oldState);
+            if (oldState != null) {
+                if (heuristic == Heuristic.H_ONE)
+                    node.setTotalCost(currentNode.getTotalCost() + Character.getNumericValue(node.getStringPuzzle().charAt(currentNode.getStringPuzzle().indexOf('0'))), heuristicOne(node.getStringPuzzle(), goalState));
+                else if (heuristic == Heuristic.H_TWO)
+                    node.setTotalCost(currentNode.getTotalCost() + Character.getNumericValue(node.getStringPuzzle().charAt(currentNode.getStringPuzzle().indexOf('0'))), heuristicTwo(node.getStringPuzzle(), goalState));
+            }
             pq.add(node);
             stateHistory.put(newState, oldState);
             numNodesCreated++;
@@ -420,11 +466,26 @@ class UninformedSearch {
     }
 
     // This heuristic estimates the cost to the goal from current state by counting the number of misplaced tiles
-    static int heuristicOne(String currentState, String goalSate) {
+    private static int heuristicOne(String currentState, String goalSate) {
         int difference = 0;
         for (int i = 0; i < currentState.length(); i += 1)
             if (currentState.charAt(i) != goalSate.charAt(i))
                 difference += 1;
+        return difference;
+    }
+
+    // This heuristic is almost similar to the manhattan distance heuristic except that it has higher value. When we estimate the cost
+    // by calculating the manhattan distance, we underestimate this cost because we do not count to the number moves the intermediate tiles should move
+    // in order to make space for the source tile to move. therefore, we think if the manhattan distance is, lets say, 4, it means
+    // there are 3 tiles in between that they should also move. so the estimate is (manhattan distance + manhattan distance - 1 = 2*manhattan distance-1)
+    private static int heuristicTwo(String currentState, String goalSate) {
+        int difference = 0;
+        int manhattanDistance = 0;
+        for (int i = 0; i < currentState.length(); i += 1)
+            for (int j = 0; j < goalSate.length(); j += 1)
+                if (currentState.charAt(i) == goalSate.charAt(j))
+                    manhattanDistance = (Math.abs(i % 3 - j % 3)) + Math.abs(i / 3 + j / 3);
+        difference = difference + 2 * manhattanDistance - 1;
         return difference;
     }
 }

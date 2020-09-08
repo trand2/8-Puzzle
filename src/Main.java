@@ -15,6 +15,8 @@ public class Main {
         int searchToRun;
         String fileName;
         int depth = 0;
+        Heuristic heuristic = Heuristic.H_ONE;
+        int heuristicToRun;
 
         System.out.println("Welcome to 8-Puzzle!!!\n");
         System.out.println("1 - Breadth First Search");
@@ -23,6 +25,7 @@ public class Main {
         System.out.println("4 - Iterative Deepening");
         System.out.println("5 - Bi-Directional");
         System.out.println("6 - Greedy");
+        System.out.println("7 - A*");
         System.out.print("\nEnter the number for the search you would like to run to solve the puzzle: ");
         searchToRun = input.nextInt();
 
@@ -30,7 +33,22 @@ public class Main {
             System.out.println("\nYou have selected \"Depth First Search\".");
             System.out.print("Enter a depth-limit: ");
             depth = input.nextInt();
+        } else if (searchToRun == 7) {
+            System.out.println("\nYou have selected the \"A* Search\".");
+            System.out.print("Enter 1 or 2 for the heuristic you would like to use: ");
+            heuristicToRun = input.nextInt();
+            if (heuristicToRun == 1) {
+                heuristic = Heuristic.H_ONE;
+            } else if (heuristicToRun == 2) {
+                heuristic = Heuristic.H_TWO;
+            } else {
+                System.out.println("Invalid. You must enter either a 1 or 2 for the heuristic.");
+                System.exit(0);
+            }
+
+
         }
+
 
         System.out.print("Now enter the file name with the starting puzzle configuration: ");
         fileName = input.next();
@@ -63,31 +81,34 @@ public class Main {
 
         Node root = new Node(initialBoard);
         Node stringRoot = new Node(board, 0);
-//        UninformedSearch ui = new UninformedSearch();
+//        EightPuzzleSearch ui = new EightPuzzleSearch();
 
         long startTime = System.currentTimeMillis();
 
-        UninformedSearch uninformedSearch = new UninformedSearch(); // New Instance of the UninformedSearch
+        EightPuzzleSearch eightPuzzleSearch = new EightPuzzleSearch(); // New Instance of the EightPuzzleSearch
 
         switch (searchToRun) {
             case 1:
-                uninformedSearch.add(board, null, SearchType.BFS);
-                uninformedSearch.breadthFirstSearch();
+                eightPuzzleSearch.add(board, null, SearchType.BFS);
+                eightPuzzleSearch.breadthFirstSearch();
             case 2:
-                uninformedSearch.add(board, null, SearchType.DFS);
-                uninformedSearch.depthFirstSearch();
+                eightPuzzleSearch.add(board, null, SearchType.DFS);
+                eightPuzzleSearch.depthFirstSearch();
             case 3:
-                uninformedSearch.add(board, null, SearchType.DLS);
-                uninformedSearch.depthLimitedSearch(depth);
+                eightPuzzleSearch.add(board, null, SearchType.DLS);
+                eightPuzzleSearch.depthLimitedSearch(depth);
             case 4:
-                uninformedSearch.add(board, null, SearchType.ID);
-                uninformedSearch.iterativeDeepening(0);
+                eightPuzzleSearch.add(board, null, SearchType.ID);
+                eightPuzzleSearch.iterativeDeepening(0);
             case 5:
-                uninformedSearch.add(board, null, SearchType.BD);
-                uninformedSearch.biDirectional();
+                eightPuzzleSearch.add(board, null, SearchType.BD);
+                eightPuzzleSearch.biDirectional();
             case 6:
-                uninformedSearch.add(board, null, SearchType.GREEDY);
-                uninformedSearch.greedySearch();
+                eightPuzzleSearch.add(board, null, SearchType.GREEDY);
+                eightPuzzleSearch.greedySearch();
+            case 7:
+                eightPuzzleSearch.add(board, null, SearchType.A_STAR);
+                eightPuzzleSearch.aStarSearch(heuristic);
         }
 
         long endTime = System.currentTimeMillis();
@@ -97,19 +118,19 @@ public class Main {
         System.out.println(separator);
         System.out.println("Time to find a solution: "+ elapsedTime + " ms");
         System.out.println(separator);
-        System.out.println("Number of nodes created: " + uninformedSearch.getNumNodesCreated());
+        System.out.println("Number of nodes created: " + eightPuzzleSearch.getNumNodesCreated());
         System.out.println(separator);
-        System.out.println("Number of nodes expanded: " + uninformedSearch.getNumNodesExpanded());
+        System.out.println("Number of nodes expanded: " + eightPuzzleSearch.getNumNodesExpanded());
         System.out.println(separator);
         System.out.println("Solution Path:  ");
 
-        uninformedSearch.printHistory();
+        eightPuzzleSearch.printHistory();
 
         System.out.println(separator);
-        System.out.println("Number of moved along the solutions path: " + uninformedSearch.getNumSolutionPath());
+        System.out.println("Number of moved along the solutions path: " + eightPuzzleSearch.getNumSolutionPath());
         System.out.println(separator);
         System.out.println("Solved Puzzle: ");
-        uninformedSearch.printSolvedPuzzle();
+        eightPuzzleSearch.printSolvedPuzzle();
 
     }
 
