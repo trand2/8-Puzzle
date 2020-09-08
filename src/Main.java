@@ -22,6 +22,7 @@ public class Main {
         System.out.println("3 - Depth Limited Search");
         System.out.println("4 - Iterative Deepening");
         System.out.println("5 - Bi-Directional");
+        System.out.println("6 - Greedy");
         System.out.print("\nEnter the number for the search you would like to run to solve the puzzle: ");
         searchToRun = input.nextInt();
 
@@ -61,6 +62,7 @@ public class Main {
         }
 
         Node root = new Node(initialBoard);
+        Node stringRoot = new Node(board, 0);
 //        UninformedSearch ui = new UninformedSearch();
 
         long startTime = System.currentTimeMillis();
@@ -83,6 +85,9 @@ public class Main {
             case 5:
                 uninformedSearch.add(board, null, SearchType.BD);
                 uninformedSearch.biDirectional();
+            case 6:
+                uninformedSearch.add(board, null, SearchType.GREEDY);
+                uninformedSearch.greedySearch();
         }
 
         long endTime = System.currentTimeMillis();

@@ -3,5 +3,7 @@ public enum SearchType {
     DFS,
     DLS,
     ID,
-    BD
+    BD,
+    GREEDY,
+    A_STAR
 }

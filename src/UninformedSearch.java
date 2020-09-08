@@ -8,6 +8,8 @@ class UninformedSearch {
     private static Map<String,String> stateHistoryReverse = new HashMap<>();
     private static LinkedList<String> agendaReverse = new LinkedList<>();
     private static Map<String,Integer> stateDepthReverse = new HashMap<>();
+    private static PriorityComparator priorityComparator = new PriorityComparator();
+    private static PriorityQueue<Node> pq = new PriorityQueue<Node>(10, priorityComparator);
     private static String traceState;
     private static int numNodesExpanded = 0;
     private static int numNodesCreated = 0;
@@ -19,6 +21,7 @@ class UninformedSearch {
     private static String direction = "front";
     private static String searchStart;
     private static String goalState = "123456780";
+    private static Node node;
 
     static void breadthFirstSearch(){
 
@@ -207,6 +210,37 @@ class UninformedSearch {
         }
     }
 
+    static void greedySearch(){
+
+        searchType = SearchType.GREEDY;
+
+        while(!pq.isEmpty() && !solutionFound){
+            Node currentNode = pq.poll();
+            String currentState = currentNode.getStringPuzzle();
+            checkCompletion(null, currentState);
+            if (!solutionFound) {
+                up(currentState); // Move the blank space up and add new state to queue
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                down(currentState); // Move the blank space down
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                left(currentState); // Move left
+                numNodesExpanded++;
+            } else
+                break;
+            if (!solutionFound) {
+                right(currentState); // Move right and remove the current node from Queue
+                numNodesExpanded++;
+            } else
+                break;
+        }
+    }
+
 
     //Add method to add the new string to the Map and Queue
     static void add(String newState, String oldState, SearchType searchType){
@@ -233,6 +267,15 @@ class UninformedSearch {
             int newValue = oldState == null ? 0 : stateDepth.get(oldState) + 1;
             stateDepth.put(newState, newValue);
             agenda.addFirst(newState);
+            stateHistory.put(newState, oldState);
+            numNodesCreated++;
+        } else if (searchType.equals(SearchType.GREEDY) && (!stateDepth.containsKey(newState))) {
+            int newValue = oldState == null ? 0 : stateDepth.get(oldState) + 1;
+            stateDepth.put(newState, newValue);
+            node = new Node(newState, 0);
+//            agenda.add(newState);
+            node.setTotalCost(0, heuristicOne(node.getStringPuzzle(), goalState));
+            pq.add(node);
             stateHistory.put(newState, oldState);
             numNodesCreated++;
         }
@@ -374,5 +417,14 @@ class UninformedSearch {
 
     static int getNumSolutionPath() {
         return numSolutionPath;
+    }
+
+    // This heuristic estimates the cost to the goal from current state by counting the number of misplaced tiles
+    static int heuristicOne(String currentState, String goalSate) {
+        int difference = 0;
+        for (int i = 0; i < currentState.length(); i += 1)
+            if (currentState.charAt(i) != goalSate.charAt(i))
+                difference += 1;
+        return difference;
     }
 }
